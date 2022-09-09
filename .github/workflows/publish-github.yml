@@ -1,0 +1,42 @@
+name: Publish Github (Public)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-public:
+    name: Publish Public Package to Github
+    runs-on: ubuntu-latest
+    steps:
+      - name: Node on Github Registry
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@${{ secrets.NAMESPACE }}'
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Config Name
+        run: git config user.name ${{ secrets.NAMESPACE }}
+
+      - name: Config Email
+        run: git config user.email ${{ secrets.GH_CONFIG_EMAIL }}
+
+      - name: Install Deps
+        run: yarn install
+
+      - name: Run Lint
+        run: yarn lint
+
+      - name: Run Tests
+        run: yarn test
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
