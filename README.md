@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🟣 `@ricardojrmcom/use-phantasma-link`
+# 👻 `@ricardojrmcom/use-phantasma-link`
 
 <b>React hook for PhantasmaLink</b>
 

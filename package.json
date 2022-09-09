@@ -1,7 +1,7 @@
 {
   "name": "@ricardojrmcom/use-phantasma-link",
   "description": "React hook for PhantasmaLink",
-  "version": "0.0.1-development",
+  "version": "0.0.2-development",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
