@@ -7,8 +7,6 @@ import { usePhantasmaLink } from '.';
 export const DemoDapp = () => {
   const { dapp, isLoggedIn, isLoggedInSet } = usePhantasmaLink();
 
-  console.log({ dapp });
-
   useEffect(() => {
     if (dapp) {
       console.log({ dapp });
