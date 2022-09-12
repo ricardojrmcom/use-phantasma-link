@@ -36,6 +36,49 @@ export class PhantasmaLink {
     this.createSocket();
   }
 
+  invokeRawScript(
+    chain,
+    script,
+    payload,
+    callback,
+    platform = 'phantasma',
+    signature = 'Ed25519',
+  ) {
+    if (!this.socket) {
+      callback('not logged in');
+      return;
+    }
+    if (script.length >= 8192) {
+      console.error('script too big, sorry :(');
+      return;
+    }
+    if (payload == null) {
+      payload = '';
+    } else if (typeof payload === 'string') {
+      let sb = new ScriptBuilder();
+      let bytes = sb.rawString(payload);
+      sb.appendBytes(bytes);
+      payload = sb.script;
+    } else {
+      alert('invalid payload, sorry :(');
+      return;
+    }
+
+    let requestStr = chain + '/' + script;
+    console.log('teste.' + requestStr);
+    if (this.version >= 2) {
+      requestStr = requestStr;
+    } else {
+      requestStr = this.nexus + '/' + requestStr;
+    }
+
+    console.log('teste2.' + requestStr);
+
+    this.sendLinkRequest('invokeScript/' + requestStr, function (result) {
+      callback(result);
+    });
+  }
+
   invokeScript(script) {
     // this.onMessage('Relaying transaction to wallet...')
 
