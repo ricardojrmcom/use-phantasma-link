@@ -37,15 +37,15 @@ export class PhantasmaLink {
   }
 
   invokeRawScript(
-    chain,
-    script,
-    payload,
-    callback,
+    chain: string,
+    script: string,
+    payload: string | null,
+    callback: () => any,
     platform = 'phantasma',
     signature = 'Ed25519',
   ) {
     if (!this.socket) {
-      callback('not logged in');
+      console.warning('not logged in');
       return;
     }
     if (script.length >= 8192) {
@@ -60,7 +60,7 @@ export class PhantasmaLink {
       sb.appendBytes(bytes);
       payload = sb.script;
     } else {
-      alert('invalid payload, sorry :(');
+      console.warning('invalid payload, sorry :(');
       return;
     }
 
@@ -158,7 +158,7 @@ export class PhantasmaLink {
     }
     this.sendLinkRequest('signData/' + data + '/1', function (result) {
       if (result.success) {
-        //   alertbox.show('Data successfully signed')
+        //   console.warningbox.show('Data successfully signed')
         that.onMessage('Data successfully signed');
 
         if (callback) {
@@ -354,7 +354,7 @@ function PavillionLink() {
 
   this.sendTransaction = (nexus, chain, script, payload, callback) => {
     if (script.length >= 8192) {
-      alert('script too big, sorry :(');
+      console.warning('script too big, sorry :(');
       return; // TODO callback with error
     }
 
@@ -368,7 +368,7 @@ function PavillionLink() {
       // then we convert the bytes into hex, because thats what PhantasmaLink protocol expects
       payload = sb.script;
     } else {
-      alert('invalid payload, sorry :(');
+      console.warning('invalid payload, sorry :(');
       return; // TODO callback with error
     }
     this.onSignAndSubmit = callback;
